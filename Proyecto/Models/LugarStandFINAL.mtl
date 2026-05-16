@@ -1,0 +1,235 @@
+# Blender 5.0.1 MTL File: 'LugarStand.blend'
+# www.blender.org
+
+newmtl 02___Default.001
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Kd 0.858800 0.109800 0.309800
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+
+newmtl 03___Default.001
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+
+newmtl 07___Default.001
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 1.000000 0.047100
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+
+newmtl 08___Default
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.964700 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+
+newmtl 09___Default
+Ns 10.000005
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.870600 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+
+newmtl Mat
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd Models/Extras/Monitor/1335 Monitor.png
+
+newmtl Material
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/Carteles/0.4x0.4/4.png
+
+newmtl Material.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/StandBlanco.png
+
+newmtl Material.002
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/Carteles/0.50X0.30/4.png
+
+newmtl Material.003
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/Metal011_1K-JPG_Color.jpg
+map_Ns TexturasEntorno/Stands/Metal011_1K-JPG_Roughness.jpg
+map_refl TexturasEntorno/Stands/Metal011_1K-JPG_Metalness.jpg
+map_Bump -bm 1.000000 TexturasEntorno/Stands/Metal011_1K-JPG_NormalGL.jpg
+
+newmtl Material.004
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/MesaPatas.png
+
+newmtl Material.005
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/Manteles/MantelStand1/Fabric042_1K-JPG_Color.jpg
+map_Ns TexturasEntorno/Stands/Manteles/MantelStand1/Fabric042_1K-JPG_Roughness.jpg
+map_Bump -bm 1.000000 TexturasEntorno/Stands/Manteles/MantelStand1/Fabric042_1K-JPG_NormalGL.jpg
+
+newmtl Material.006
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/Carteles/0.894x0.497/4.png
+
+newmtl Material.007
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/Carteles/0.894x0.497/1.4.png
+
+newmtl Material.008
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd TexturasEntorno/Stands/Carteles/0.4x0.4/4.png
+map_d TexturasEntorno/Stands/Carteles/0.4x0.4/4.png
+
+newmtl Material.012
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/MesaPatas.png
+
+newmtl Material.013
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/StandBlanco.png
+
+newmtl Material.014
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/StandBlanco.png
+
+newmtl Material.015
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TexturasEntorno/Stands/StandBlanco.png
+
+newmtl _crayfishdiffuse
+Ns 29.999998
+Ka 1.000000 1.000000 1.000000
+Kd 0.011800 0.011800 0.011800
+Ks 0.200000 0.200000 0.200000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+
+newmtl initialShadingGroup
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd Models/Pluma/Marble021_1K-JPG_Color.jpg
+
+newmtl lambert2SG
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.010000 0.010000 0.010000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+
+newmtl lambert3SG
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd ../../Downloads/amazon.png
