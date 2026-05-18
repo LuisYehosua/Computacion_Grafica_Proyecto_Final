@@ -543,13 +543,13 @@ int main()
 
 	Model Humanoide((char*)"Models/Humanoid/HumanoRobot.obj");
 	Model Multitud((char*)"Models/Multitud/MultitudPersonas1.obj");
-	Model Facultad((char*)"Models/FacultadFINAL.obj");
+	Model Facultad((char*)"Models/FacultadFINAL2.obj");
 	Model Ingeniera((char*)"Models/stands/Ingeniera.obj");
 	Model Pareja((char*)"Models/stands/Stand2obj.obj");
 	Model Mujer((char*)"Models/stands/Stand3.obj");
 	Model Hombre((char*)"Models/stands/Stand4.obj");
 	Model Stand1((char*)"Models/LugarStand1FINAL.obj");
-	//Model Stand2((char*)"Models/LugarStandFINAL.obj");
+	Model Stand2((char*)"Models/LugarStandPrueba12.obj");
 	Model Stand3((char*)"Models/LugarStand3FINAL.obj");
 	Model Stand4((char*)"Models/LugarStand4FINAL.obj");
 	Model LIRA((char*)"Models/Extras/Cuadro/LIRA.obj");
@@ -810,7 +810,7 @@ int main()
 		model = glm::translate(model, glm::vec3(8.0f, 0.0f, 12.0f));
 		model = glm::scale(model, glm::vec3(2.8f, 4.0f, 2.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//Stand2.Draw(lightingShader);
+		Stand2.Draw(lightingShader);
 
 		//Cuadro
 		model = modelTemp;

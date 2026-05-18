@@ -19,7 +19,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd TexturasEntorno/Stands/Carteles/0.4x0.4/6.png
+map_Kd TexturasEntorno/Stands/Carteles/0.4x0.4/5.png
 
 newmtl Material.001
 Ns 250.000000
@@ -39,7 +39,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd TexturasEntorno/Stands/Carteles/0.50X0.30/6.png
+map_Kd TexturasEntorno/Stands/Carteles/0.50X0.30/5.png
 
 newmtl Material.003
 Ka 1.000000 1.000000 1.000000
@@ -82,7 +82,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd TexturasEntorno/Stands/Carteles/0.894x0.497/1.6.png
+map_Kd TexturasEntorno/Stands/Carteles/0.894x0.497/1.5.png
 
 newmtl Material.007
 Ns 250.000000
@@ -92,7 +92,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd TexturasEntorno/Stands/Carteles/0.894x0.497/6.png
+map_Kd TexturasEntorno/Stands/Carteles/0.894x0.497/5.png
 
 newmtl Material.009
 Ns 250.000000
