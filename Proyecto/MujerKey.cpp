@@ -509,7 +509,7 @@ float mujerPosX = 3.0f, mujerPosY = 2.5f, mujerPosZ = -24.0f;
 float mujerRotY = 1.0f;
 float mujerRotX = 0.0f;
 
-float mCabeza = 0.0f; 
+float mCabeza = 0.0f;
 
 float mHombroD = 0.0f;
 float mHombroDZ = 0.0f;
@@ -553,6 +553,31 @@ FRAME_MUJER KeyFrameMujer[MAX_FRAMES_MUJER];
 int  frameIndexMujer = 0;
 bool playMujer = false;
 int  playIndexMujer = 0;
+
+void saveFrameMujer()
+{
+	if (frameIndexMujer >= MAX_FRAMES_MUJER) { printf("Max keyframes mujer\n"); return; }
+	printf("Mujer - guardando keyframe %d\n", frameIndexMujer);
+	KeyFrameMujer[frameIndexMujer].posX = mujerPosX;
+	KeyFrameMujer[frameIndexMujer].posY = mujerPosY;
+	KeyFrameMujer[frameIndexMujer].posZ = mujerPosZ;
+	KeyFrameMujer[frameIndexMujer].rotY = mujerRotY;
+	KeyFrameMujer[frameIndexMujer].rotX = mujerRotX;
+	KeyFrameMujer[frameIndexMujer].cabeza = mCabeza;
+	KeyFrameMujer[frameIndexMujer].hombroD = mHombroD;
+	KeyFrameMujer[frameIndexMujer].hombroDZ = mHombroDZ;
+	KeyFrameMujer[frameIndexMujer].codoD = mCodoD;
+	KeyFrameMujer[frameIndexMujer].manoD = mManoD;
+	KeyFrameMujer[frameIndexMujer].hombroI = mHombroI;
+	KeyFrameMujer[frameIndexMujer].hombroIZ = mHombroIZ;
+	KeyFrameMujer[frameIndexMujer].codoI = mCodoI;
+	KeyFrameMujer[frameIndexMujer].manoI = mManoI;
+	KeyFrameMujer[frameIndexMujer].piernaD = mPiernaD;
+	KeyFrameMujer[frameIndexMujer].pieD = mPieD;
+	KeyFrameMujer[frameIndexMujer].piernaI = mPiernaI;
+	KeyFrameMujer[frameIndexMujer].pieI = mPieI;
+	frameIndexMujer++;
+}
 
 void resetElementsMujer()
 {
@@ -654,6 +679,25 @@ void AnimationMujer()
 		mPieI += KeyFrameMujer[playIndexMujer].pieIInc;
 		iCurrStepsMujer++;
 	}
+}
+
+void saveToFileMujer(const char* filename)
+{
+	std::ofstream file(filename);
+	if (!file.is_open()) { printf("No se pudo crear %s\n", filename); return; }
+	file << frameIndexMujer << "\n";
+	for (int i = 0; i < frameIndexMujer; i++)
+		file << KeyFrameMujer[i].posX << " " << KeyFrameMujer[i].posY << " "
+		<< KeyFrameMujer[i].posZ << " " << KeyFrameMujer[i].rotY << " "
+		<< KeyFrameMujer[i].rotX << " " << KeyFrameMujer[i].cabeza << " "
+		<< KeyFrameMujer[i].hombroD << " " << KeyFrameMujer[i].hombroDZ << " "
+		<< KeyFrameMujer[i].codoD << " " << KeyFrameMujer[i].manoD << " "
+		<< KeyFrameMujer[i].hombroI << " " << KeyFrameMujer[i].hombroIZ << " "
+		<< KeyFrameMujer[i].codoI << " " << KeyFrameMujer[i].manoI << " "
+		<< KeyFrameMujer[i].piernaD << " " << KeyFrameMujer[i].pieD << " "
+		<< KeyFrameMujer[i].piernaI << " " << KeyFrameMujer[i].pieI << "\n";
+	file.close();
+	printf("Animación mujer guardada en %s\n", filename);
 }
 
 void loadFromFileMujer(const char* filename)
@@ -1173,18 +1217,19 @@ int main()
 		glDisable(GL_BLEND);
 		glBindVertexArray(0);
 
-		//--------Mujer escaleras base---------------
+		// ---- MUJER ESCALERAS ----
 		glm::mat4 mujerBase = glm::mat4(1.0f);
 		mujerBase = glm::translate(mujerBase, glm::vec3(mujerPosX, mujerPosY + sceneRiseY, mujerPosZ));
 		mujerBase = glm::rotate(mujerBase, glm::radians(mujerRotY), glm::vec3(0.0f, 1.0f, 0.0f));
+		mujerBase = glm::rotate(mujerBase, glm::radians(mujerRotX), glm::vec3(1.0f, 0.0f, 0.0f));
 		mujerBase = glm::scale(mujerBase, glm::vec3(3.0f, 3.0f, 3.0f));
 
-		//Cuerpo
+		// Cuerpo
 		glm::mat4 modelCuerpo = mujerBase;
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelCuerpo));
 		CuerpoM.Draw(lightingShader);
 
-		//Cabeza
+		// Cabeza (Y = decir que no)
 		glm::mat4 modelCabeza = modelCuerpo;
 		modelCabeza = glm::translate(modelCabeza, glm::vec3(0.0f, 5.0f, 0.0f));
 		modelCabeza = glm::rotate(modelCabeza, glm::radians(mCabeza), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -1192,15 +1237,16 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelCabeza));
 		CabezaM.Draw(lightingShader);
 
-		//Hombro derecho
+		// Hombro D (X = adelante/atrás, Z = lateral)
 		glm::mat4 modelHombroD = modelCuerpo;
 		modelHombroD = glm::translate(modelHombroD, glm::vec3(-0.2f, 4.5f, 0.0f));
 		modelHombroD = glm::rotate(modelHombroD, glm::radians(mHombroD), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelHombroD = glm::rotate(modelHombroD, glm::radians(mHombroDZ), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelHombroD = glm::translate(modelHombroD, glm::vec3(0.2f, -4.5f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelHombroD));
 		HombroDM.Draw(lightingShader);
 
-		//Codo derecho
+		// Codo D (hereda hombro)
 		glm::mat4 modelCodoD = modelHombroD;
 		modelCodoD = glm::translate(modelCodoD, glm::vec3(-0.2f, 3.5f, 0.0f));
 		modelCodoD = glm::rotate(modelCodoD, glm::radians(mCodoD), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -1208,23 +1254,24 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelCodoD));
 		CodoDM.Draw(lightingShader);
 
-		//Mano derecha
+		// Mano D (hereda codo, muñeca en Y)
 		glm::mat4 modelManoD = modelCodoD;
 		modelManoD = glm::translate(modelManoD, glm::vec3(-0.2f, 2.5f, 0.0f));
-		modelManoD = glm::rotate(modelManoD, glm::radians(mManoD), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelManoD = glm::rotate(modelManoD, glm::radians(mManoD), glm::vec3(0.0f, 1.0f, 0.0f));
 		modelManoD = glm::translate(modelManoD, glm::vec3(0.2f, -2.5f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelManoD));
 		ManoDM.Draw(lightingShader);
 
-		//Hombro izquierdo
+		// Hombro I
 		glm::mat4 modelHombroI = modelCuerpo;
 		modelHombroI = glm::translate(modelHombroI, glm::vec3(0.2f, 4.5f, 0.0f));
 		modelHombroI = glm::rotate(modelHombroI, glm::radians(mHombroI), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelHombroI = glm::rotate(modelHombroI, glm::radians(mHombroIZ), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelHombroI = glm::translate(modelHombroI, glm::vec3(-0.2f, -4.5f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelHombroI));
 		HombroIM.Draw(lightingShader);
 
-		//Codo izquierdo
+		// Codo I (hereda hombro)
 		glm::mat4 modelCodoI = modelHombroI;
 		modelCodoI = glm::translate(modelCodoI, glm::vec3(0.2f, 3.5f, 0.0f));
 		modelCodoI = glm::rotate(modelCodoI, glm::radians(mCodoI), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -1232,15 +1279,15 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelCodoI));
 		CodoIM.Draw(lightingShader);
 
-		//Mano izquierda
+		// Mano I (hereda codo)
 		glm::mat4 modelManoI = modelCodoI;
 		modelManoI = glm::translate(modelManoI, glm::vec3(0.2f, 2.5f, 0.0f));
-		modelManoI = glm::rotate(modelManoI, glm::radians(mManoI), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelManoI = glm::rotate(modelManoI, glm::radians(mManoI), glm::vec3(0.0f, 1.0f, 0.0f));
 		modelManoI = glm::translate(modelManoI, glm::vec3(-0.2f, -2.5f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelManoI));
 		ManoIM.Draw(lightingShader);
 
-		//Pierna derecha
+		// Pierna D
 		glm::mat4 modelPiernaD = modelCuerpo;
 		modelPiernaD = glm::translate(modelPiernaD, glm::vec3(-0.1f, 3.0f, 0.0f));
 		modelPiernaD = glm::rotate(modelPiernaD, glm::radians(mPiernaD), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -1248,7 +1295,7 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelPiernaD));
 		PiernaDM.Draw(lightingShader);
 
-		//Pie derecho
+		// Pie D (hereda pierna)
 		glm::mat4 modelPieD = modelPiernaD;
 		modelPieD = glm::translate(modelPieD, glm::vec3(-0.1f, 0.5f, 0.1f));
 		modelPieD = glm::rotate(modelPieD, glm::radians(mPieD), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -1256,7 +1303,7 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelPieD));
 		PieDM.Draw(lightingShader);
 
-		//Pierna izquierda
+		// Pierna I
 		glm::mat4 modelPiernaI = modelCuerpo;
 		modelPiernaI = glm::translate(modelPiernaI, glm::vec3(0.1f, 3.0f, 0.0f));
 		modelPiernaI = glm::rotate(modelPiernaI, glm::radians(mPiernaI), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -1264,7 +1311,7 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelPiernaI));
 		PiernaIM.Draw(lightingShader);
 
-		//Pie izquierdo
+		// Pie I (hereda pierna)
 		glm::mat4 modelPieI = modelPiernaI;
 		modelPieI = glm::translate(modelPieI, glm::vec3(0.1f, 0.5f, 0.1f));
 		modelPieI = glm::rotate(modelPieI, glm::radians(mPieI), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -1393,6 +1440,66 @@ unsigned int loadCubemap(std::vector<std::string> faces)
 
 void DoMovement()
 {
+	// ---- MUJER ----
+   // Posición y rotación base
+	if (keys[GLFW_KEY_0]) mujerPosZ -= 0.05f;   // adelante
+	if (keys[GLFW_KEY_9]) mujerPosZ += 0.05f;   // atrás
+	if (keys[GLFW_KEY_8]) mujerPosY += 0.05f;   // subir
+	if (keys[GLFW_KEY_7]) mujerPosY -= 0.05f;   // bajar
+	if (keys[GLFW_KEY_6]) mujerRotY += 1.0f;    // girar Y
+	if (keys[GLFW_KEY_5]) mujerRotY -= 1.0f;
+	if (keys[GLFW_KEY_4]) mujerRotX += 1.0f;    // inclinar cuerpo (caída)
+	if (keys[GLFW_KEY_3]) mujerRotX -= 1.0f;
+
+	// Cabeza (decir que no = Y)
+	if (keys[GLFW_KEY_1]) mCabeza += 1.0f;
+	if (keys[GLFW_KEY_2]) mCabeza -= 1.0f;
+
+	// Hombro D (X = adelante/atrás)
+	if (keys[GLFW_KEY_Q]) mHombroD += 1.0f;
+	if (keys[GLFW_KEY_E]) mHombroD -= 1.0f;
+	// Hombro D (Z = lateral)
+	if (keys[GLFW_KEY_Z]) mHombroDZ += 1.0f;
+	if (keys[GLFW_KEY_X]) mHombroDZ -= 1.0f;
+
+	// Codo D
+	if (keys[GLFW_KEY_C]) mCodoD += 1.0f;
+	if (keys[GLFW_KEY_V]) mCodoD -= 1.0f;
+
+	// Mano D (muñeca)
+	if (keys[GLFW_KEY_B]) mManoD += 1.0f;
+	if (keys[GLFW_KEY_N]) mManoD -= 1.0f;
+
+	// Hombro I (X = adelante/atrás)
+	if (keys[GLFW_KEY_T]) mHombroI += 1.0f;
+	if (keys[GLFW_KEY_Y]) mHombroI -= 1.0f;
+	// Hombro I (Z = lateral)
+	if (keys[GLFW_KEY_U]) mHombroIZ += 1.0f;
+	if (keys[GLFW_KEY_I]) mHombroIZ -= 1.0f;
+
+	// Codo I
+	if (keys[GLFW_KEY_O]) mCodoI += 1.0f;
+	if (keys[GLFW_KEY_P]) mCodoI -= 1.0f;
+
+	// Mano I (muñeca)
+	if (keys[GLFW_KEY_G]) mManoI += 1.0f;
+	if (keys[GLFW_KEY_H]) mManoI -= 1.0f;
+
+	// Pierna D
+	if (keys[GLFW_KEY_J]) mPiernaD += 1.0f;
+	if (keys[GLFW_KEY_K]) mPiernaD -= 1.0f;
+
+	// Pie D (tobillo)
+	if (keys[GLFW_KEY_L]) mPieD += 1.0f;
+	if (keys[GLFW_KEY_SEMICOLON]) mPieD -= 1.0f;
+
+	// Pierna I
+	if (keys[GLFW_KEY_M]) mPiernaI += 1.0f;
+	if (keys[GLFW_KEY_COMMA]) mPiernaI -= 1.0f;
+
+	// Pie I (tobillo)
+	if (keys[GLFW_KEY_PERIOD]) mPieI += 1.0f;
+	if (keys[GLFW_KEY_SLASH])  mPieI -= 1.0f;
 
 	static float bobTime = 0.0f;
 
@@ -1509,6 +1616,33 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 	//Suben stands y personajes
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 		startSceneRise = true;
+
+	//Mujer
+		// Guardar keyframe
+	if (key == GLFW_KEY_K && action == GLFW_PRESS)
+		saveFrameMujer();
+	// Guardar archivo
+	if (key == GLFW_KEY_R && action == GLFW_PRESS && (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS
+		|| glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS))
+		saveToFileMujer("animacion_mujer.txt");
+	// Cargar archivo
+	if (key == GLFW_KEY_R && action == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE
+		&& glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_RELEASE)
+		loadFromFileMujer("animacion_mujer.txt");
+	// Play/Stop
+	if (key == GLFW_KEY_TAB && action == GLFW_PRESS)
+	{
+		if (!playMujer && frameIndexMujer > 1)
+		{
+			resetElementsMujer(); interpolationMujer();
+			playMujer = true; playIndexMujer = 0; iCurrStepsMujer = 0;
+			printf("Mujer - reproduciendo\n");
+		}
+		else { playMujer = false; printf("Mujer - detenida\n"); }
+	}
+	// Guardar archivo mujer (F)
+	if (key == GLFW_KEY_F && action == GLFW_PRESS)
+		saveToFileMujer("animacion_mujer.txt");
 }
 
 void MouseCallback(GLFWwindow* window, double xPos, double yPos)

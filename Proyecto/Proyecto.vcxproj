@@ -135,9 +135,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ProyectoFinal.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="miniaudio.h" />
     <ClInclude Include="Shader.h" />
@@ -151,6 +148,9 @@
     <None Include="Shader\modelLoading.vs" />
     <None Include="Shader\skybox.frag" />
     <None Include="Shader\skybox.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ProyectoFinal.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
