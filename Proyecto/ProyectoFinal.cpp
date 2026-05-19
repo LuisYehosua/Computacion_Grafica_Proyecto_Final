@@ -197,7 +197,7 @@ float sceneRiseY = -12.0f;
 bool startSceneRise = false;
 bool sceneArrived = false;
 
-// Variables de postura del robot (relativas al cuerpo base)
+// Variables de postura del robot
 float rBrazoD = 0.0f;
 float rBrazoI = 0.0f;
 float rPiernaD = 0.0f;
@@ -502,6 +502,30 @@ void loadFromFilePerro(const char* filename)
 	printf("Animación perro cargada desde %s (%d keyframes)\n", filename, frameIndexPerro);
 }
 
+//Mujer Esclaeras
+// Posición y Rotación Base
+float mujerPosX = 3.0f;
+float mujerPosY = 2.5f;
+float mujerPosZ = -24.0f;
+float mujerRotY = 1.0f;
+
+//Angulos
+float mCabeza = 0.0f;
+
+float mHombroD = 0.0f;
+float mCodoD = 0.0f;
+float mManoD = 0.0f;
+
+float mHombroI = 0.0f;
+float mCodoI = 0.0f;
+float mManoI = 0.0f;
+
+float mPiernaD = 0.0f;
+float mPieD = 0.0f;
+
+float mPiernaI = 0.0f;
+float mPieI = 0.0f;
+
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
@@ -543,13 +567,13 @@ int main()
 
 	Model Humanoide((char*)"Models/Humanoid/HumanoRobot.obj");
 	Model Multitud((char*)"Models/Multitud/MultitudPersonas1.obj");
-	Model Facultad((char*)"Models/FacultadFINAL2.obj");
+	Model Facultad((char*)"Models/FacultadCOMPLETOYA.obj");
 	Model Ingeniera((char*)"Models/stands/Ingeniera.obj");
 	Model Pareja((char*)"Models/stands/Stand2obj.obj");
-	Model Mujer((char*)"Models/stands/Stand3.obj");
+	Model MujerStand((char*)"Models/stands/Stand3.obj");
 	Model Hombre((char*)"Models/stands/Stand4.obj");
 	Model Stand1((char*)"Models/LugarStand1FINAL.obj");
-	Model Stand2((char*)"Models/LugarStandPrueba12.obj");
+	//Model Stand2((char*)"Models/LugarStandPrueba12.obj");
 	Model Stand3((char*)"Models/LugarStand3FINAL.obj");
 	Model Stand4((char*)"Models/LugarStand4FINAL.obj");
 	Model LIRA((char*)"Models/Extras/Cuadro/LIRA.obj");
@@ -568,6 +592,20 @@ int main()
 	Model FrenteI((char*)"Models/Cuadrupedo/FrenteI.obj");
 	Model TraseraD((char*)"Models/Cuadrupedo/TraseraD.obj");
 	Model TraseraI((char*)"Models/Cuadrupedo/TraseraI.obj");
+
+	//Mujer escaleras
+	Model CabezaM((char*)"Models/Mujer/Cabeza.obj");
+	Model CuerpoM((char*)"Models/Mujer/Cuerpo.obj");
+	Model CodoDM((char*)"Models/Mujer/CodoD.obj");
+	Model HombroDM((char*)"Models/Mujer/HombroD.obj");
+	Model CodoIM((char*)"Models/Mujer/CodoI.obj");
+	Model ManoIM((char*)"Models/Mujer/ManoI.obj");
+	Model ManoDM((char*)"Models/Mujer/ManoD.obj");
+	Model HombroIM((char*)"Models/Mujer/HombroI.obj");
+	Model PieDM((char*)"Models/Mujer/PieD.obj");
+	Model PiernaDM((char*)"Models/Mujer/PiernaD.obj");
+	Model PieIM((char*)"Models/Mujer/PieI.obj");
+	Model PiernaIM((char*)"Models/Mujer/PiernaI.obj");
 
 	// --- Inicializar arreglos de keyframes ---
 	for (int i = 0; i < MAX_FRAMES_ROBOT; i++) {
@@ -810,7 +848,7 @@ int main()
 		model = glm::translate(model, glm::vec3(8.0f, 0.0f, 12.0f));
 		model = glm::scale(model, glm::vec3(2.8f, 4.0f, 2.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Stand2.Draw(lightingShader);
+		//Stand2.Draw(lightingShader);
 
 		//Cuadro
 		model = modelTemp;
@@ -839,14 +877,14 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Pareja.Draw(lightingShader);
 
-		//Mujer
+		//Mujer Stand
 		model = modelTemp;
 		model = glm::translate(model, glm::vec3(0.0f, sceneRiseY, 0.0f));
 		model = glm::translate(model, glm::vec3(9.5f, 0.0f, -6.3f));
 		model = glm::rotate(model, 1.5f, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(3.5f, 3.5f, 3.5f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Mujer.Draw(lightingShader);
+		MujerStand.Draw(lightingShader);
 
 		//Hombre
 		model = modelTemp;
@@ -988,6 +1026,105 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDisable(GL_BLEND);
 		glBindVertexArray(0);
+
+		//--------Mujer escaleras base---------------
+		glm::mat4 mujerBase = glm::mat4(1.0f);
+		mujerBase = glm::translate(mujerBase, glm::vec3(mujerPosX, mujerPosY + sceneRiseY, mujerPosZ));
+		mujerBase = glm::rotate(mujerBase, glm::radians(mujerRotY), glm::vec3(0.0f, 1.0f, 0.0f));
+		mujerBase = glm::scale(mujerBase, glm::vec3(3.0f, 3.0f, 3.0f));
+
+		//Cuerpo
+		glm::mat4 modelCuerpo = mujerBase;
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelCuerpo));
+		CuerpoM.Draw(lightingShader);
+
+		//Cabeza
+		glm::mat4 modelCabeza = modelCuerpo;
+		modelCabeza = glm::translate(modelCabeza, glm::vec3(0.0f, 5.0f, 0.0f));
+		modelCabeza = glm::rotate(modelCabeza, glm::radians(mCabeza), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelCabeza = glm::translate(modelCabeza, glm::vec3(0.0f, -5.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelCabeza));
+		CabezaM.Draw(lightingShader);
+
+		//Hombro derecho
+		glm::mat4 modelHombroD = modelCuerpo;
+		modelHombroD = glm::translate(modelHombroD, glm::vec3(-0.2f, 4.5f, 0.0f));
+		modelHombroD = glm::rotate(modelHombroD, glm::radians(mHombroD), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelHombroD = glm::translate(modelHombroD, glm::vec3(0.2f, -4.5f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelHombroD));
+		HombroDM.Draw(lightingShader);
+
+		//Codo derecho
+		glm::mat4 modelCodoD = modelHombroD;
+		modelCodoD = glm::translate(modelCodoD, glm::vec3(-0.2f, 3.5f, 0.0f));
+		modelCodoD = glm::rotate(modelCodoD, glm::radians(mCodoD), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelCodoD = glm::translate(modelCodoD, glm::vec3(0.2f, -3.5f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelCodoD));
+		CodoDM.Draw(lightingShader);
+
+		//Mano derecha
+		glm::mat4 modelManoD = modelCodoD;
+		modelManoD = glm::translate(modelManoD, glm::vec3(-0.2f, 2.5f, 0.0f));
+		modelManoD = glm::rotate(modelManoD, glm::radians(mManoD), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelManoD = glm::translate(modelManoD, glm::vec3(0.2f, -2.5f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelManoD));
+		ManoDM.Draw(lightingShader);
+
+		//Hombro izquierdo
+		glm::mat4 modelHombroI = modelCuerpo;
+		modelHombroI = glm::translate(modelHombroI, glm::vec3(0.2f, 4.5f, 0.0f));
+		modelHombroI = glm::rotate(modelHombroI, glm::radians(mHombroI), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelHombroI = glm::translate(modelHombroI, glm::vec3(-0.2f, -4.5f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelHombroI));
+		HombroIM.Draw(lightingShader);
+
+		//Codo izquierdo
+		glm::mat4 modelCodoI = modelHombroI;
+		modelCodoI = glm::translate(modelCodoI, glm::vec3(0.2f, 3.5f, 0.0f));
+		modelCodoI = glm::rotate(modelCodoI, glm::radians(mCodoI), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelCodoI = glm::translate(modelCodoI, glm::vec3(-0.2f, -3.5f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelCodoI));
+		CodoIM.Draw(lightingShader);
+
+		//Mano izquierda
+		glm::mat4 modelManoI = modelCodoI;
+		modelManoI = glm::translate(modelManoI, glm::vec3(0.2f, 2.5f, 0.0f));
+		modelManoI = glm::rotate(modelManoI, glm::radians(mManoI), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelManoI = glm::translate(modelManoI, glm::vec3(-0.2f, -2.5f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelManoI));
+		ManoIM.Draw(lightingShader);
+
+		//Pierna derecha
+		glm::mat4 modelPiernaD = modelCuerpo;
+		modelPiernaD = glm::translate(modelPiernaD, glm::vec3(-0.1f, 3.0f, 0.0f));
+		modelPiernaD = glm::rotate(modelPiernaD, glm::radians(mPiernaD), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelPiernaD = glm::translate(modelPiernaD, glm::vec3(0.1f, -3.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelPiernaD));
+		PiernaDM.Draw(lightingShader);
+
+		//Pie derecho
+		glm::mat4 modelPieD = modelPiernaD;
+		modelPieD = glm::translate(modelPieD, glm::vec3(-0.1f, 0.5f, 0.1f));
+		modelPieD = glm::rotate(modelPieD, glm::radians(mPieD), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelPieD = glm::translate(modelPieD, glm::vec3(0.1f, -0.5f, -0.1f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelPieD));
+		PieDM.Draw(lightingShader);
+
+		//Pierna izquierda
+		glm::mat4 modelPiernaI = modelCuerpo;
+		modelPiernaI = glm::translate(modelPiernaI, glm::vec3(0.1f, 3.0f, 0.0f));
+		modelPiernaI = glm::rotate(modelPiernaI, glm::radians(mPiernaI), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelPiernaI = glm::translate(modelPiernaI, glm::vec3(-0.1f, -3.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelPiernaI));
+		PiernaIM.Draw(lightingShader);
+
+		//Pie izquierdo
+		glm::mat4 modelPieI = modelPiernaI;
+		modelPieI = glm::translate(modelPieI, glm::vec3(0.1f, 0.5f, 0.1f));
+		modelPieI = glm::rotate(modelPieI, glm::radians(mPieI), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelPieI = glm::translate(modelPieI, glm::vec3(-0.1f, -0.5f, -0.1f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelPieI));
+		PieIM.Draw(lightingShader);
 
 
 		// Lamp shader
