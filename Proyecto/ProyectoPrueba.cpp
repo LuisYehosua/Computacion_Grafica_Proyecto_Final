@@ -1,6 +1,9 @@
-//320255409 | 422130448
-//13/05/2026
-//Proyecto Final
+
+
+
+
+
+
 #include <iostream>
 #include <cmath>
 #include <string>
@@ -31,10 +34,11 @@
 #include "Camera.h"
 #include "Model.h"
 
-//Animacion huesos
+// === ANIMACION ESQUELETICA ===
 #include "AnimatedModel.h"
 #include "Animation.h"
 #include "Animator.h"
+// === FIN ===
 
 //Audio
 #define MINIAUDIO_IMPLEMENTATION
@@ -95,7 +99,7 @@ const int NUM_LAMPS = sizeof(lampPositions) / sizeof(lampPositions[0]);
 
 bool lampsOn = false;
 
-//Animacion huesos, persona corriendo
+// === ANIMACION ESQUELETICA: control del aventurero ===
 bool  adventurerActive = false;   // se activa con tecla T
 float adventurerZ = -10.0f;  // posicion Z actual
 float adventurerX = 17.0f;   // posicion X actual
@@ -103,6 +107,7 @@ float adventurerRotY = 0.0f;    // rotacion en Y (grados)
 bool  adventurerTurned = false;   // si ya giro o no
 bool  adventurerInvisible = false;   // si esta oculto
 float adventurerSpeed = 4.0f;    // unidades por segundo
+// === FIN ===
 
 //Audio
 ma_engine audioEngine;
@@ -516,14 +521,14 @@ void loadFromFilePerro(const char* filename)
 	printf("Animación perro cargada desde %s (%d keyframes)\n", filename, frameIndexPerro);
 }
 
-
+// ===========================================================================
 //  MUJER KEYFRAME SYSTEM
-
+// ===========================================================================
 float mujerPosX = 3.0f, mujerPosY = 2.5f, mujerPosZ = -24.0f;
 float mujerRotY = 1.0f;
 float mujerRotX = 0.0f;
 
-float mCabeza = 0.0f; 
+float mCabeza = 0.0f;
 
 float mHombroD = 0.0f;
 float mHombroDZ = 0.0f;
@@ -724,8 +729,10 @@ int main()
 	Shader lampShader("Shader/lamp.vs", "Shader/lamp.frag");
 	Shader skyboxShader("Shader/skybox.vs", "Shader/skybox.frag");
 	Shader blinkShader("Shader/blink.vs", "Shader/blink.frag");
-	//Animacion huesos
+
+	// === ANIMACION ESQUELETICA: shader ===
 	Shader animShader("Shader/anim_model.vs", "Shader/anim_model.frag");
+	// === FIN ===
 
 	Model Humanoide((char*)"Models/Humanoid/HumanoRobot.obj");
 	Model Multitud((char*)"Models/Multitud/MultitudPersonas1.obj");
@@ -769,19 +776,21 @@ int main()
 	Model PieIM((char*)"Models/Mujer/PieI.obj");
 	Model PiernaIM((char*)"Models/Mujer/PiernaI.obj");
 
-	//Animacion huesos
+	// === ANIMACION ESQUELETICA: modelo + animacion + animator ===
 	AnimatedModel adventurer("Models/Adventurer/Adventurer.fbx");
 	Animation     animRun("Models/Adventurer/Adventurer.fbx", &adventurer,
 		std::string("CharacterArmature|Run"));
 	Animator      animator(&animRun);
+	// === FIN ===
 
-	//Tiburon
+	// === TIBURON BAILARIN ===
 	AnimatedModel tiburonBaile("Models/Tiburon/tiburon_baile.fbx");
 	Animation     animBaile("Models/Tiburon/tiburon_baile.fbx", &tiburonBaile,
 		std::string("mixamo.com"));
 	Animator      animatorTiburon(&animBaile);
+	// === FIN ===
 
-	//  Inicializar arreglos de keyframes 
+	// --- Inicializar arreglos de keyframes ---
 	for (int i = 0; i < MAX_FRAMES_ROBOT; i++) {
 		KeyFrameRobot[i] = { 0,0,0,0, 0,0,0,0 };
 	}
@@ -845,7 +854,7 @@ int main()
 
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 100.0f);
 
-	//  Inicializar Motor de Audio 
+	// --- Inicializar Motor de Audio ---
 	if (ma_engine_init(NULL, &audioEngine) != MA_SUCCESS) {
 		std::cout << "Error al iniciar el motor de audio" << std::endl;
 	}
@@ -871,8 +880,7 @@ int main()
 		AnimationRobot();
 		AnimationPerro();
 
-
-		//Animacion de huesos
+		// === ANIMACION ESQUELETICA: avanzar solo si esta activo ===
 		if (adventurerActive)
 		{
 			animator.UpdateAnimation(deltaTime);
@@ -908,9 +916,11 @@ int main()
 				}
 			}
 		}
+		// === FIN ===
 
+		// === TIBURON BAILARIN: siempre bailando ===
 		animatorTiburon.UpdateAnimation(deltaTime);
-
+		// === FIN ===
 
 		// Animación de aparición de escena
 		if (startSceneRise && !sceneArrived)
@@ -1122,14 +1132,14 @@ int main()
 			Multitud.Draw(lightingShader);
 		}
 
-		//Tiburon
-	/*	model = modelTemp;
-		model = glm::translate(model, glm::vec3(0.0f, sceneRiseY, 0.0f));
-		model = glm::translate(model, glm::vec3(19.0f, 3.3f, 7.5f));
-		model = glm::rotate(model, 3.15f, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Tiburon.Draw(lightingShader);*/
+		//Tiburon (comentado, ahora se usa el tiburon bailarin)
+		//model = modelTemp;
+		//model = glm::translate(model, glm::vec3(0.0f, sceneRiseY, 0.0f));
+		//model = glm::translate(model, glm::vec3(19.0f, 3.3f, 7.5f));
+		//model = glm::rotate(model, 3.15f, glm::vec3(0.0f, -1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f));
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//Tiburon.Draw(lightingShader);
 
 		// Humanoide 
 		glm::mat4 robotBase = glm::mat4(1.0f);
@@ -1343,7 +1353,7 @@ int main()
 		PieIM.Draw(lightingShader);
 
 
-		//Animacion huesos
+		// === ANIMACION ESQUELETICA: dibujar al aventurero ===
 		if (!adventurerInvisible)
 		{
 			animShader.Use();
@@ -1373,8 +1383,9 @@ int main()
 
 			adventurer.Draw(animShader);
 		}
+		// === FIN ===
 
-		//Tiburon
+		// === TIBURON BAILARIN: dibujar (solo despues de presionar R) ===
 		if (startSceneRise)
 		{
 			animShader.Use();
@@ -1403,7 +1414,7 @@ int main()
 
 			tiburonBaile.Draw(animShader);
 		}
-
+		// === FIN ===
 
 
 		// Lamp shader
@@ -1624,8 +1635,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 		loadFromFilePerro("animacion_perro.txt");
 
-
-	//Animacion huesos T->
+	// === ANIMACION ESQUELETICA: T -> activar/desactivar aventurero ===
 	if (key == GLFW_KEY_T && action == GLFW_PRESS)
 	{
 		if (adventurerActive)
@@ -1646,6 +1656,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 			printf("Aventurero - corriendo!\n");
 		}
 	}
+	// === FIN ===
 
 	//Luces modo paro L
 	if (key == GLFW_KEY_L && action == GLFW_PRESS) {
@@ -1693,4 +1704,3 @@ void MouseCallback(GLFWwindow* window, double xPos, double yPos)
 		camera.SetPitch(-PITCH_LIMIT);
 	}
 }
-
