@@ -1280,8 +1280,11 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 	}
 
 	// R  -> cargar animación robot desde archivo
-	if (key == GLFW_KEY_R && action == GLFW_PRESS)
+	if (key == GLFW_KEY_R && action == GLFW_PRESS) {
 		loadFromFileRobot("animacion_robot.txt");
+		loadFromFilePerro("animacion_perro.txt");
+		loadFromFileMujer("animacion_mujer.txt");
+	}
 
 	// E  -> play / stop animación perro
 	if (key == GLFW_KEY_E && action == GLFW_PRESS)
@@ -1301,10 +1304,6 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 			printf("Perro - animacion detenida\n");
 		}
 	}
-
-	// R  -> cargar animación perro desde archivo
-	if (key == GLFW_KEY_R && action == GLFW_PRESS)
-		loadFromFilePerro("animacion_perro.txt");
 
 	//Luces modo paro L
 	if (key == GLFW_KEY_L && action == GLFW_PRESS) {
@@ -1333,10 +1332,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 	if (key == GLFW_KEY_F && action == GLFW_PRESS && (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS
 		|| glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_PRESS))
 		saveToFileMujer("animacion_mujer.txt");
-	// Cargar archivo
-	if (key == GLFW_KEY_T && action == GLFW_PRESS && glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE
-		&& glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) == GLFW_RELEASE)
-		loadFromFileMujer("animacion_mujer2.txt");
+
 	// Play/Stop
 	if (key == GLFW_KEY_I && action == GLFW_PRESS)
 	{
