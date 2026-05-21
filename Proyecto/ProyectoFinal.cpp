@@ -542,7 +542,7 @@ float mPiernaI = 0.0f;
 float mPieI = 0.0f;
 
 #define MAX_FRAMES_MUJER 250
-int iMaxStepsMujer = 60;
+int iMaxStepsMujer = 30;
 int iCurrStepsMujer = 0;
 
 typedef struct {
